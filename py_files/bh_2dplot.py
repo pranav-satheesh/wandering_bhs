@@ -16,14 +16,20 @@ _VIEW_AXES = {
 
 
 def _load_subhalo_field(sim_file, field, p_type, z, subhalo_index):
-    """Thin wrapper around the postprocessed-group loader.
+    """Thin wrapper around the group-catalog particle loader.
 
     Returns just the subhalo particle array for `field`, or None if the
     subhalo has no particles of this type.
+
+    Uses get_particle_property_within_groups (NOT ..._postprocessed): the
+    postprocessed catalogue has a different subhalo ordering/count, so feeding
+    it an index from brahma.groupcat.loadSubhalos returns the wrong (often
+    empty) particle set for satellite subhaloes. This loader is consistent
+    with the standard catalogue used here for the centre and n_bh.
     """
     # store_all_offsets=0 -> compute group offsets on the fly instead of
     # caching them to a .npy inside the (read-only) simulation folder.
-    out = arepo.get_particle_property_within_postprocessed_groups(
+    out = arepo.get_particle_property_within_groups(
         sim_file, particle_property=[field], p_type=p_type,
         desired_redshift=z, subhalo_index=subhalo_index, group_type='subhalo',
         store_all_offsets=0)
