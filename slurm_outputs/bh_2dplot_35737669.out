@@ -1,0 +1,10 @@
+snap 19 -> z = 6.0108; subhalo 160; bg_ptype=0; view=xy
+subhalo 160 has no p_type=0 particles for the background.
+Saved /home/pranavsatheesh/wandering_bhs/figures/2d_plots/bh_2dplot_snap19_sub160_xy_bg0.pdf
+snap 19 -> z = 6.0108; subhalo 198; bg_ptype=0; view=xy
+snap 21 -> z = 4.0079; subhalo 236; bg_ptype=0; view=xy
+subhalo 236 has no p_type=0 particles for the background.
+Saved /home/pranavsatheesh/wandering_bhs/figures/2d_plots/bh_2dplot_snap21_sub236_xy_bg0.pdf
+snap 21 -> z = 4.0079; subhalo 566; bg_ptype=0; view=xy
+subhalo 566 has no p_type=0 particles for the background.
+Saved /home/pranavsatheesh/wandering_bhs/figures/2d_plots/bh_2dplot_snap21_sub566_xy_bg0.pdf

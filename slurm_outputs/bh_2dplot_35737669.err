@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/pranavsatheesh/wandering_bhs/py_files/run_bh_2dplot.py", line 74, in <module>
+    main()
+  File "/home/pranavsatheesh/wandering_bhs/py_files/run_bh_2dplot.py", line 61, in main
+    ax = bh_2dplot.bh_subhalo_2Dplot(
+  File "/home/pranavsatheesh/wandering_bhs/py_files/bh_2dplot.py", line 96, in bh_subhalo_2Dplot
+    MBH = bh_mass * 1e10 / h                              # Msun
+TypeError: unsupported operand type(s) for *: 'NoneType' and 'float'

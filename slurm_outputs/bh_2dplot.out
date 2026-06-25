@@ -1,0 +1,4 @@
+snap 32 -> z = 0.0000; subhalo 9853; bg_ptype=0; view=xy
+snap 32 -> z = 0.0000; subhalo 6229; bg_ptype=0; view=xy
+snap 25 -> z = 0.9973; subhalo 1230; bg_ptype=0; view=xy
+snap 25 -> z = 0.9973; subhalo 3880; bg_ptype=0; view=xy
