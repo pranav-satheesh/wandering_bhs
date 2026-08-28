@@ -41,7 +41,15 @@ def main():
                    help='full image side in ckpc, or "auto"')
     p.add_argument('--nbins', type=int, default=300,
                    help='background histogram resolution')
+    p.add_argument('--bg_cmap', default='afmhot',
+                   help="background galaxy colormap (e.g. afmhot, gist_heat, hot, bone)")
+    p.add_argument('--bg_method', default='adaptive', choices=['adaptive', 'hist'],
+                   help="background smoothing: adaptive (kNN, smooth+sharp) or hist (plain)")
+    p.add_argument('--adaptive_k', type=int, default=16,
+                   help="adaptive neighbours (bigger=smoother, smaller=sharper)")
     p.add_argument('--dpi', type=int, default=200)
+    p.add_argument('--bh_cmap', default='plasma',
+                   help="black hole colormap (e.g. plasma, viridis, inferno, magma)")
     args = p.parse_args()
 
     os.makedirs(args.outDir, exist_ok=True)
@@ -53,15 +61,21 @@ def main():
     print(f"snap {args.snap} -> z = {z:.4f}; subhalo {args.subhalo}; "
           f"bg_ptype={args.bg_ptype}; view={args.view}")
 
+    # unique per-run suffix (SLURM job id) so each submission writes a NEW
+    # file -> no stale PDF-viewer cache showing an old render of the same path
+    jobid = os.environ.get('SLURM_JOB_ID', '')
+    suffix = f"_{jobid}" if jobid else ""
     save_name = os.path.join(
         args.outDir,
         f"bh_2dplot_snap{args.snap}_sub{args.subhalo}_{args.view}_"
-        f"bg{args.bg_ptype}.pdf")
+        f"bg{args.bg_ptype}_{args.box_length}_{args.bg_cmap}_{args.bg_method}{suffix}.pdf")
 
     ax = bh_2dplot.bh_subhalo_2Dplot(
         args.basePath, args.snap, z, args.subhalo,
         view=args.view, bg_ptype=args.bg_ptype, box_length=box_length,
-        Nbins=args.nbins, radiative_efficiency=args.radiative_efficiency,
+        Nbins=args.nbins, radiative_efficiency=args.radiative_efficiency,cmap=args.bh_cmap,
+        bg_cmap=args.bg_cmap, bg_method=args.bg_method,
+        adaptive_k=args.adaptive_k,
         save_name=save_name, dpi=args.dpi)
 
     if ax is None:

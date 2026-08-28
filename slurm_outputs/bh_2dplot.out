@@ -1,4 +1,2 @@
-snap 32 -> z = 0.0000; subhalo 9853; bg_ptype=0; view=xy
-snap 32 -> z = 0.0000; subhalo 6229; bg_ptype=0; view=xy
-snap 25 -> z = 0.9973; subhalo 1230; bg_ptype=0; view=xy
-snap 25 -> z = 0.9973; subhalo 3880; bg_ptype=0; view=xy
+snap 25 -> z = 0.9973; subhalo 683; bg_ptype=0; view=xy
+Saved /home/pranavsatheesh/wandering_bhs/figures/2d_plots/bh_2dplot_snap25_sub683_xy_bg0_40_inferno_adaptive_36022646.pdf

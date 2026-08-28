@@ -20,11 +20,16 @@ outDir=/home/pranavsatheesh/wandering_bhs/figures/2d_plots
 bg_ptype=0                 # 0=gas, 1=DM, 4=stars (background image)
 view='xy'
 radiative_efficiency=0.2
-box_length=auto            # kpc, or a number e.g. 50
+box_length=40         # kpc, or a number e.g. 50
 nbins=400
-
-# "snap:subhalo" pairs to process. Edit as needed.
-snap_subhalo_pairs=("32:9853" "32:6229" "25:1230" "25:3880")
+bg_cmap=inferno         # galaxy colormap: afmhot, gist_heat, hot, bone
+bg_method=adaptive  # background smoothing: adaptive (smooth+sharp) or hist (plain/grainy)
+adaptive_k=6       # adaptive neighbours: bigger=smoother, smaller=sharper
+bh_cmap=viridis         # black hole colormap: plasma, viridis, inferno, magma
+# "snap:subhalo" pairs to process (POSTPROCESSED catalogue indices).
+# These are SATELLITE subhalos with >50 BHs -> compact galaxies, not halos.
+# (centrals look halo-scale; see subhalos_gt50_bh_SM5_DFD_3_TNG.csv, is_central)
+snap_subhalo_pairs=("25:683")
 
 for pair in "${snap_subhalo_pairs[@]}"; do
   snap=${pair%:*}
@@ -39,5 +44,9 @@ for pair in "${snap_subhalo_pairs[@]}"; do
     --view $view \
     --radiative_efficiency $radiative_efficiency \
     --box_length $box_length \
-    --nbins $nbins
+    --nbins $nbins \
+    --bg_cmap $bg_cmap \
+    --bg_method $bg_method \
+    --adaptive_k $adaptive_k \
+    --bh_cmap $bh_cmap
 done
