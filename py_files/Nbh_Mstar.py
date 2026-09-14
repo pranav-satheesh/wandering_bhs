@@ -51,10 +51,10 @@ def main():
         plt.plot(snapchoicebins, snapchoicemeds, label=round(redshifts[s], 2))
         plt.fill_between(snapchoicebins, snapchoicefifths, snapchoiceninetyfifths, alpha=0.3)
     plt.legend(loc="upper left", ncols=2, title="Redshift")
-    plt.title(r"Median $N_{bh}$ (and $5^{th}$ to $95^{th}$ percentiles) vs Stellar Mass")
+    plt.title(r"Median $N_{bh}$ (and $P_5$ to $P_95$) vs Stellar Mass ("+Brahma_sim_name+")")
     plt.xlabel(r"$\log_{10}(M_{\rm \star} [M_{\odot}])$")
     plt.ylabel(r"$\log_{10}(N_{\rm BH})$")
-    plt.savefig("figuretest")
+    plt.savefig("Nbh_Mstar_fig_"+Brahma_sim_name[:-1])
 
 if __name__ == '__main__':
     main()
