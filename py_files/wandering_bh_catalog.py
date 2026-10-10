@@ -60,7 +60,7 @@ def load_bh_field(sim_file, field, z, subhalo_index):
 
 # ------------------------------------------------------------ one snapshot ----
 
-def snapshot_rows(sim_file, snap, z, eps=0.2, verbose_every=200):
+def snapshot_rows(sim_file, snap, z, max_subhalos, eps=0.2, verbose_every=200):
     """Build the per-BH and per-subhalo row dicts for a single snapshot."""
 
     subhalo_cat = load_subhalo_catalogue(sim_file, snap)
@@ -82,12 +82,14 @@ def snapshot_rows(sim_file, snap, z, eps=0.2, verbose_every=200):
     # Only subhalos that actually host a BH need a particle read
     bh_hosts = np.flatnonzero(lentype[:, 5] > 0)
     bh_data, subhalo_data = [], []
-
+    if max_subhalos == None: max_subhalos = len(bh_hosts)
+    
     for n_done, i in enumerate(bh_hosts):
         i = int(i) #ith subhalo that hosts BHs
         if verbose_every and n_done % verbose_every == 0:
             print(f"  snap {snap}: subhalo {n_done}/{len(bh_hosts)}", flush=True)
-
+        if n_done >= max_subhalos:
+            break
         #BH Data within subhalos that host them 
         BH_coords = load_bh_field(sim_file, "Coordinates", z, i)
         if BH_coords is None:
@@ -148,7 +150,7 @@ def snapshot_rows(sim_file, snap, z, eps=0.2, verbose_every=200):
             BH_r_kpc=r_kpc, 
             BH_r_code=r_code,
             BH_masses = BHmass_msun,
-            BH_r_over_stellar_halfrad=r_kpc / subhalo_stellar_halfmass_rad,
+            BH_r_over_stellar_halfrad=r_kpc / subhalo_stellar_halfmass_rad, # Getting divide by zero errors. Should we check for that or let it be
             BH_Mdot = BH_Mdot_msun_per_yr,
             BH_Lbol = BH_Lbol,
             BH_closest=BH_closest_to_center,
@@ -249,8 +251,9 @@ if __name__ == "__main__":
     p.add_argument("--outPath", default="/orange/lblecha/pranavsatheesh/wandering_bhs/Data/")
     p.add_argument("--snaps", type=int, nargs="*", default=None,
                    help="explicit snapshot numbers")
+    p.add_argument("--numSubhalos", type=int, default=-1, help="max number of subhalos to process per snap")
     args = p.parse_args()
-
+    print("Args parsed!") # FOR DEBUGGING
     sim_file = os.path.join(args.simPath, args.simName)
     outfile_name = os.path.join(args.outPath, f"wandering_bh_{args.simName.strip('/').replace('/', '_')}.hdf5")
 

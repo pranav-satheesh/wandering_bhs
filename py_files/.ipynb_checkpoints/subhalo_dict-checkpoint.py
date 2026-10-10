@@ -48,7 +48,7 @@ def add_snap_to_file(Brahma_sim_file, redshifts, snap, numsubs, hdf):
     thisSnap = hdf.make_group(str(snap))
     z = redshifts[snap]
     red = thisSnap.make_database("redshift", data=[z])
-    num = thisSnap.make_database("numSubhalos", data=[len(this_snap_info["SubhaloCM"]])
+    num = thisSnap.make_database("numSubhalos", data=[len(this_snap_info["SubhaloCM"])])
     if numsubs == -1: numsubs = thisSnap["numSubhalos"][0]
     for i in range(numsubs):
         if (i%25 == 0): print(i)
