@@ -1,0 +1,17 @@
+/home/logantenner/wandering_bhs/slurm_scripts
+c0704a-s13.ufhpc
+Tue Oct 13 12:10:52 PM EDT 2026
+Running plot script on a single CPU core
+snap 0 (z=25.048): 0/2 subhalos  and has 0 BHs (0 BH-hosting subhalos skipped for having no stars)
+snap 1 (z=23.961): 0/8 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 2 (z=23.032): 0/23 subhalos  and has 0 BHs (3 BH-hosting subhalos skipped for having no stars)
+snap 3 (z=22.029): 0/51 subhalos  and has 0 BHs (5 BH-hosting subhalos skipped for having no stars)
+snap 4 (z=20.963): 0/119 subhalos  and has 0 BHs (19 BH-hosting subhalos skipped for having no stars)
+snap 5 (z=20.046): 0/225 subhalos  and has 0 BHs (28 BH-hosting subhalos skipped for having no stars)
+  snap 6: subhalo 0/1
+snap 6 (z=18.978): 1/494 subhalos  and has 1 BHs (42 BH-hosting subhalos skipped for having no stars)
+snap 7 (z=17.963): 0/1036 subhalos  and has 0 BHs (84 BH-hosting subhalos skipped for having no stars)
+  snap 8: subhalo 0/5
+snap 8 (z=17.000): 5/1932 subhalos  and has 6 BHs (146 BH-hosting subhalos skipped for having no stars)
+  snap 9: subhalo 0/15
+snap 9 (z=16.005): 15/3594 subhalos  and has 20 BHs (263 BH-hosting subhalos skipped for having no stars)

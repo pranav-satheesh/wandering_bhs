@@ -1,0 +1,203 @@
+/home/logantenner/wandering_bhs/slurm_scripts
+c0704a-s13.ufhpc
+Tue Oct 13 12:10:52 PM EDT 2026
+Running plot script on a single CPU core
+snap 0 (z=25.048): 0/2 subhalos  and has 0 BHs (0 BH-hosting subhalos skipped for having no stars)
+snap 1 (z=23.961): 0/8 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 2 (z=23.032): 0/23 subhalos  and has 0 BHs (3 BH-hosting subhalos skipped for having no stars)
+snap 3 (z=22.029): 0/51 subhalos  and has 0 BHs (5 BH-hosting subhalos skipped for having no stars)
+snap 4 (z=20.963): 0/119 subhalos  and has 0 BHs (19 BH-hosting subhalos skipped for having no stars)
+snap 5 (z=20.046): 0/225 subhalos  and has 0 BHs (28 BH-hosting subhalos skipped for having no stars)
+  snap 6: subhalo 0/1
+snap 6 (z=18.978): 1/494 subhalos  and has 1 BHs (42 BH-hosting subhalos skipped for having no stars)
+snap 7 (z=17.963): 0/1036 subhalos  and has 0 BHs (84 BH-hosting subhalos skipped for having no stars)
+  snap 8: subhalo 0/5
+snap 8 (z=17.000): 5/1932 subhalos  and has 6 BHs (146 BH-hosting subhalos skipped for having no stars)
+  snap 9: subhalo 0/15
+snap 9 (z=16.005): 15/3594 subhalos  and has 20 BHs (263 BH-hosting subhalos skipped for having no stars)
+  snap 10: subhalo 0/41
+snap 10 (z=14.989): 41/6461 subhalos  and has 53 BHs (446 BH-hosting subhalos skipped for having no stars)
+  snap 11: subhalo 0/66
+snap 11 (z=14.034): 66/10643 subhalos  and has 96 BHs (691 BH-hosting subhalos skipped for having no stars)
+  snap 12: subhalo 0/163
+snap 12 (z=13.003): 163/17548 subhalos  and has 232 BHs (844 BH-hosting subhalos skipped for having no stars)
+  snap 13: subhalo 0/328
+  snap 13: subhalo 200/328
+snap 13 (z=11.980): 328/27024 subhalos  and has 445 BHs (1234 BH-hosting subhalos skipped for having no stars)
+  snap 14: subhalo 0/574
+  snap 14: subhalo 200/574
+  snap 14: subhalo 400/574
+snap 14 (z=10.976): 574/39653 subhalos  and has 792 BHs (1700 BH-hosting subhalos skipped for having no stars)
+  snap 15: subhalo 0/884
+  snap 15: subhalo 200/884
+  snap 15: subhalo 400/884
+  snap 15: subhalo 600/884
+  snap 15: subhalo 800/884
+snap 15 (z=9.997): 884/49332 subhalos  and has 1178 BHs (1921 BH-hosting subhalos skipped for having no stars)
+  snap 16: subhalo 0/1237
+  snap 16: subhalo 200/1237
+  snap 16: subhalo 400/1237
+  snap 16: subhalo 600/1237
+  snap 16: subhalo 800/1237
+  snap 16: subhalo 1000/1237
+  snap 16: subhalo 1200/1237
+snap 16 (z=9.002): 1237/61431 subhalos  and has 1639 BHs (2148 BH-hosting subhalos skipped for having no stars)
+  snap 17: subhalo 0/1592
+  snap 17: subhalo 200/1592
+  snap 17: subhalo 400/1592
+  snap 17: subhalo 600/1592
+  snap 17: subhalo 800/1592
+  snap 17: subhalo 1000/1592
+  snap 17: subhalo 1200/1592
+  snap 17: subhalo 1400/1592
+snap 17 (z=8.012): 1592/73393 subhalos  and has 2152 BHs (2064 BH-hosting subhalos skipped for having no stars)
+  snap 18: subhalo 0/1879
+  snap 18: subhalo 200/1879
+  snap 18: subhalo 400/1879
+  snap 18: subhalo 600/1879
+  snap 18: subhalo 800/1879
+  snap 18: subhalo 1000/1879
+  snap 18: subhalo 1200/1879
+  snap 18: subhalo 1400/1879
+  snap 18: subhalo 1600/1879
+  snap 18: subhalo 1800/1879
+snap 18 (z=7.005): 1879/85958 subhalos  and has 2585 BHs (2115 BH-hosting subhalos skipped for having no stars)
+  snap 19: subhalo 0/2140
+  snap 19: subhalo 200/2140
+  snap 19: subhalo 400/2140
+  snap 19: subhalo 600/2140
+  snap 19: subhalo 800/2140
+  snap 19: subhalo 1000/2140
+  snap 19: subhalo 1200/2140
+  snap 19: subhalo 1400/2140
+  snap 19: subhalo 1600/2140
+  snap 19: subhalo 1800/2140
+  snap 19: subhalo 2000/2140
+snap 19 (z=6.011): 2140/98521 subhalos  and has 2995 BHs (2011 BH-hosting subhalos skipped for having no stars)
+  snap 20: subhalo 0/2383
+  snap 20: subhalo 200/2383
+  snap 20: subhalo 400/2383
+  snap 20: subhalo 600/2383
+  snap 20: subhalo 800/2383
+  snap 20: subhalo 1000/2383
+  snap 20: subhalo 1200/2383
+  snap 20: subhalo 1400/2383
+  snap 20: subhalo 1600/2383
+  snap 20: subhalo 1800/2383
+  snap 20: subhalo 2000/2383
+  snap 20: subhalo 2200/2383
+snap 20 (z=4.996): 2383/110931 subhalos  and has 3429 BHs (1865 BH-hosting subhalos skipped for having no stars)
+  snap 21: subhalo 0/2555
+  snap 21: subhalo 200/2555
+  snap 21: subhalo 400/2555
+  snap 21: subhalo 600/2555
+  snap 21: subhalo 800/2555
+  snap 21: subhalo 1000/2555
+  snap 21: subhalo 1200/2555
+  snap 21: subhalo 1400/2555
+  snap 21: subhalo 1600/2555
+  snap 21: subhalo 1800/2555
+  snap 21: subhalo 2000/2555
+  snap 21: subhalo 2200/2555
+  snap 21: subhalo 2400/2555
+snap 21 (z=4.008): 2555/119852 subhalos  and has 3798 BHs (1464 BH-hosting subhalos skipped for having no stars)
+  snap 22: subhalo 0/2393
+  snap 22: subhalo 200/2393
+  snap 22: subhalo 400/2393
+  snap 22: subhalo 600/2393
+  snap 22: subhalo 800/2393
+  snap 22: subhalo 1000/2393
+  snap 22: subhalo 1200/2393
+  snap 22: subhalo 1400/2393
+  snap 22: subhalo 1600/2393
+  snap 22: subhalo 1800/2393
+  snap 22: subhalo 2000/2393
+  snap 22: subhalo 2200/2393
+snap 22 (z=3.008): 2393/124103 subhalos  and has 3803 BHs (1044 BH-hosting subhalos skipped for having no stars)
+  snap 23: subhalo 0/2016
+  snap 23: subhalo 200/2016
+  snap 23: subhalo 400/2016
+  snap 23: subhalo 600/2016
+  snap 23: subhalo 800/2016
+  snap 23: subhalo 1000/2016
+  snap 23: subhalo 1200/2016
+  snap 23: subhalo 1400/2016
+  snap 23: subhalo 1600/2016
+  snap 23: subhalo 1800/2016
+  snap 23: subhalo 2000/2016
+snap 23 (z=2.002): 2016/121446 subhalos  and has 3668 BHs (737 BH-hosting subhalos skipped for having no stars)
+  snap 24: subhalo 0/1764
+  snap 24: subhalo 200/1764
+  snap 24: subhalo 400/1764
+  snap 24: subhalo 600/1764
+  snap 24: subhalo 800/1764
+  snap 24: subhalo 1000/1764
+  snap 24: subhalo 1200/1764
+  snap 24: subhalo 1400/1764
+  snap 24: subhalo 1600/1764
+snap 24 (z=1.496): 1764/117164 subhalos  and has 3541 BHs (610 BH-hosting subhalos skipped for having no stars)
+  snap 25: subhalo 0/1516
+  snap 25: subhalo 200/1516
+  snap 25: subhalo 400/1516
+  snap 25: subhalo 600/1516
+  snap 25: subhalo 800/1516
+  snap 25: subhalo 1000/1516
+  snap 25: subhalo 1200/1516
+  snap 25: subhalo 1400/1516
+snap 25 (z=0.997): 1516/110571 subhalos  and has 3419 BHs (499 BH-hosting subhalos skipped for having no stars)
+  snap 26: subhalo 0/1379
+  snap 26: subhalo 200/1379
+  snap 26: subhalo 400/1379
+  snap 26: subhalo 600/1379
+  snap 26: subhalo 800/1379
+  snap 26: subhalo 1000/1379
+  snap 26: subhalo 1200/1379
+snap 26 (z=0.700): 1379/105885 subhalos  and has 3345 BHs (439 BH-hosting subhalos skipped for having no stars)
+  snap 27: subhalo 0/1293
+  snap 27: subhalo 200/1293
+  snap 27: subhalo 400/1293
+  snap 27: subhalo 600/1293
+  snap 27: subhalo 800/1293
+  snap 27: subhalo 1000/1293
+  snap 27: subhalo 1200/1293
+snap 27 (z=0.503): 1293/102417 subhalos  and has 3288 BHs (418 BH-hosting subhalos skipped for having no stars)
+  snap 28: subhalo 0/1245
+  snap 28: subhalo 200/1245
+  snap 28: subhalo 400/1245
+  snap 28: subhalo 600/1245
+  snap 28: subhalo 800/1245
+  snap 28: subhalo 1000/1245
+  snap 28: subhalo 1200/1245
+snap 28 (z=0.400): 1245/100538 subhalos  and has 3239 BHs (415 BH-hosting subhalos skipped for having no stars)
+  snap 29: subhalo 0/1205
+  snap 29: subhalo 200/1205
+  snap 29: subhalo 400/1205
+  snap 29: subhalo 600/1205
+  snap 29: subhalo 800/1205
+  snap 29: subhalo 1000/1205
+  snap 29: subhalo 1200/1205
+snap 29 (z=0.298): 1205/98580 subhalos  and has 3212 BHs (402 BH-hosting subhalos skipped for having no stars)
+  snap 30: subhalo 0/1161
+  snap 30: subhalo 200/1161
+  snap 30: subhalo 400/1161
+  snap 30: subhalo 600/1161
+  snap 30: subhalo 800/1161
+  snap 30: subhalo 1000/1161
+snap 30 (z=0.197): 1161/96802 subhalos  and has 3165 BHs (401 BH-hosting subhalos skipped for having no stars)
+  snap 31: subhalo 0/1124
+  snap 31: subhalo 200/1124
+  snap 31: subhalo 400/1124
+  snap 31: subhalo 600/1124
+  snap 31: subhalo 800/1124
+  snap 31: subhalo 1000/1124
+snap 31 (z=0.099): 1124/95032 subhalos  and has 3116 BHs (395 BH-hosting subhalos skipped for having no stars)
+  snap 32: subhalo 0/1099
+  snap 32: subhalo 200/1099
+  snap 32: subhalo 400/1099
+  snap 32: subhalo 600/1099
+  snap 32: subhalo 800/1099
+  snap 32: subhalo 1000/1099
+snap 32 (z=0.000): 1099/93317 subhalos  and has 3079 BHs (388 BH-hosting subhalos skipped for having no stars)
+wrote 56296 BHs across 33 snapshots
+wrote /orange/lblecha/pranavsatheesh/wandering_bhs/Data/wandering_bh_SM5_LW10_DFD_3_TNG.hdf5
+Tue Oct 13 12:12:29 PM EDT 2026
