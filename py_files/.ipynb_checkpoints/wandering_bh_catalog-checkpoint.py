@@ -9,63 +9,49 @@ from cosmo_sim_tools.arepo_tools import mdot_to_Lbol
 
 
 # catalogue
-SUBHALO_REQUIRED = ["SubhaloLenType", "SubhaloPos", "SubhaloMass",
-             "SubhaloMassType", "SubhaloHalfmassRadType", "SubhaloCM"]
-SUBHALO_OPTIONAL = ["SubhaloGrNr"]
+SUBHALO_FIELDS = ["SubhaloLenType", "SubhaloPos", "SubhaloMass", "SubhaloMassType",
+                  "SubhaloHalfmassRadType", "SubhaloCM", "SubhaloGrNr"]
+GROUP_FIELDS = ["GroupLenType", "GroupFirstSub"]
+
+BH_PARTICLE_FIELDS = ["Coordinates", "BH_Mass", "BH_Mdot"]
+BH_PTYPE = 5
+STAR_PTYPE = 4
 
 
-def load_subhalo_catalogue(sim_file, snap):
-    """Postprocessed subhalo catalogue, tolerating absent optional fields."""
-    return brahma.groupcat.loadSubhalos_postprocessed(
-        sim_file, snap, fields=SUBHALO_REQUIRED + SUBHALO_OPTIONAL)
-
-def central_mask(sim_file, snap, n_sub, grnr):
+def central_mask(first_sub_of_group, subhalo_grnr):
     """True for the primary (central) subhalo of each FoF group."""
-    
-    out = np.zeros(n_sub, dtype=bool)
-
-    if grnr is None:
-        # no FoF group membership available, can't tell centrals apart
-        return out
-
-    # GroupFirstSub[g] is the subhalo index of group g's central subhalo
-    try:
-        groups = brahma.groupcat.loadHalos_postprocessed(
-            sim_file, snap, fields=["GroupFirstSub"])
-        first_sub_of_group = np.asarray(groups["GroupFirstSub"]).ravel()
-    except Exception:
-        return out
-
-    subhalo_idx = np.arange(n_sub)
-    group_idx = np.asarray(grnr).ravel()[:n_sub]
-    # guard against group ids that fall outside the loaded GroupFirstSub table
-    in_range = (group_idx >= 0) & (group_idx < len(first_sub_of_group))
-    # a subhalo is central if it is its own group's first subhalo
-    out[in_range] = first_sub_of_group[group_idx[in_range]] == subhalo_idx[in_range]
-
-    return out
+    # GroupFirstSub[g] is the subhalo index of group g's central subhalo, so a
+    # subhalo is central exactly when it is its own group's first subhalo
+    return first_sub_of_group[subhalo_grnr] == np.arange(len(subhalo_grnr))
 
 
-def load_bh_field(sim_file, field, z, subhalo_index):
-    """BH (p_type=5) particle array for one subhalo, or None if empty."""
-    out = arepo.get_particle_property_within_postprocessed_groups(
-        sim_file, particle_property=[field], p_type=5,
-        desired_redshift=z, subhalo_index=subhalo_index,
-        group_type='subhalo', store_all_offsets=0)
-    arr = out[0]
-    if arr is None or len(arr) == 0:
-        return None
-    return np.asarray(arr)
+def bh_particle_start(group_bh_len, first_sub_of_group, subhalo_bh_len, subhalo_grnr):
+    """Row of the group-ordered BH particle array where each subhalo's BHs begin.
+
+    A group-ordered snapshot stores particles group by group, and within a group
+    subhalo by subhalo, so a subhalo's BHs start at its own group's offset plus
+    the BHs of the earlier subhalos sharing that group.
+    """
+    group_start = np.concatenate([[0], np.cumsum(group_bh_len)[:-1]])
+    subhalo_start = np.concatenate([[0], np.cumsum(subhalo_bh_len)[:-1]])
+    start_within_group = subhalo_start - subhalo_start[first_sub_of_group[subhalo_grnr]]
+    return group_start[subhalo_grnr] + start_within_group
 
 
 # ------------------------------------------------------------ one snapshot ----
 
-def snapshot_rows(sim_file, snap, z, max_subhalos, eps=0.2, verbose_every=200):
+def snapshot_rows(sim_file, snap, z, max_subhalos=None, eps=0.2, verbose_every=200):
     """Build the per-BH and per-subhalo row dicts for a single snapshot."""
 
-    subhalo_cat = load_subhalo_catalogue(sim_file, snap)
-    lentype = np.asarray(subhalo_cat["SubhaloLenType"])
-    n_sub_total = len(lentype) #total number of subhalos in this snapshot
+    subhalo_cat = brahma.groupcat.loadSubhalos_postprocessed(sim_file, snap, fields=SUBHALO_FIELDS)
+    group_cat = brahma.groupcat.loadHalos_postprocessed(sim_file, snap, fields=GROUP_FIELDS)
+
+    subhalo_bh_len = np.asarray(subhalo_cat["SubhaloLenType"], dtype=np.int64)[:, BH_PTYPE]
+    subhalo_star_len = np.asarray(subhalo_cat["SubhaloLenType"], dtype=np.int64)[:, STAR_PTYPE]
+    subhalo_grnr = np.asarray(subhalo_cat["SubhaloGrNr"], dtype=np.int64).ravel()
+    group_bh_len = np.asarray(group_cat["GroupLenType"], dtype=np.int64)[:, BH_PTYPE]
+    first_sub_of_group = np.asarray(group_cat["GroupFirstSub"], dtype=np.int64).ravel()
+    n_sub_total = len(subhalo_bh_len) #total number of subhalos in this snapshot
 
     header = brahma.groupcat.loadHeader(sim_file, snap)
     h = float(header["HubbleParam"])
@@ -75,39 +61,57 @@ def snapshot_rows(sim_file, snap, z, max_subhalos, eps=0.2, verbose_every=200):
 
     subhalo_pos = np.asarray(subhalo_cat["SubhaloPos"], dtype=np.float64) #subhalo position within the box
     subhalo_cm = np.asarray(subhalo_cat["SubhaloCM"], dtype=np.float64) #subhalo center of mass
+    stellar_halfrad_kpc = np.asarray(
+        subhalo_cat["SubhaloHalfmassRadType"], dtype=np.float64)[:, STAR_PTYPE] * to_kpc
     
     #Is this subhalo a central or satellite?
-    is_central_mask = central_mask(sim_file, snap, n_sub_total, subhalo_cat.get("SubhaloGrNr"))
+    is_central_mask = central_mask(first_sub_of_group, subhalo_grnr)
 
-    # Only subhalos that actually host a BH need a particle read
-    bh_hosts = np.flatnonzero(lentype[:, 5] > 0)
+    # a BH counts as wandering by sitting outside its host's stellar half-mass
+    # radius, so a subhalo with no resolved stellar body gives nothing to measure
+    # against and is dropped rather than compared to a zero radius
+    has_stars = (subhalo_star_len > 0) & (stellar_halfrad_kpc > 0)
+    bh_hosts = np.flatnonzero((subhalo_bh_len > 0) & has_stars)
+    n_starless_bh_hosts = int(np.count_nonzero((subhalo_bh_len > 0) & ~has_stars))
+
+    # debugging aid: process only the first few BH hosts of each snapshot
+    if max_subhalos is not None:
+        bh_hosts = bh_hosts[:max_subhalos]
+
     bh_data, subhalo_data = [], []
-    if max_subhalos == None: max_subhalos = len(bh_hosts)
-    
+    if len(bh_hosts) == 0:
+        return (bh_data, subhalo_data, n_sub_total, n_starless_bh_hosts,
+                dict(HubbleParam=h, BoxSize=boxsize))
+
+    # the whole snapshot's BHs are read once and each subhalo is a slice of them
+    bh_particles = brahma.snapshot.loadSubset_groupordered(
+        sim_file, snap, BH_PTYPE, fields=BH_PARTICLE_FIELDS)
+    bh_start = bh_particle_start(group_bh_len, first_sub_of_group, subhalo_bh_len, subhalo_grnr)
+
+    n_bh_in_snapshot = len(bh_particles["Coordinates"])
+    last_bh_row = int((bh_start + subhalo_bh_len).max())
+    if last_bh_row > n_bh_in_snapshot:
+        raise RuntimeError(
+            f"snap {snap}: subhalo catalogue runs past the BH particle array "
+            f"(needs {last_bh_row} rows, snapshot has {n_bh_in_snapshot})")
+
     for n_done, i in enumerate(bh_hosts):
         i = int(i) #ith subhalo that hosts BHs
         if verbose_every and n_done % verbose_every == 0:
             print(f"  snap {snap}: subhalo {n_done}/{len(bh_hosts)}", flush=True)
-        if n_done >= max_subhalos:
-            break
-        #BH Data within subhalos that host them 
-        BH_coords = load_bh_field(sim_file, "Coordinates", z, i)
-        if BH_coords is None:
-            continue                                    # catalogue/particle mismatch
-        BH_coords = np.atleast_2d(np.asarray(BH_coords, dtype=np.float64))
-        BH_mass = np.ravel(load_bh_field(sim_file, "BH_Mass", z, i))
-        BH_mdot = np.ravel(load_bh_field(sim_file, "BH_Mdot", z, i))
+
+        #BH Data within subhalos that host them
+        nBHs = int(subhalo_bh_len[i])
+        rows = slice(int(bh_start[i]), int(bh_start[i]) + nBHs)
+        BH_coords = np.asarray(bh_particles["Coordinates"][rows], dtype=np.float64)
+        BH_mass = np.ravel(bh_particles["BH_Mass"][rows]).astype(np.float64)
+        BH_mdot = np.ravel(bh_particles["BH_Mdot"][rows]).astype(np.float64)
         BHmass_msun = BH_mass * 1e10 / h #Msun
         BH_Mdot_msun_per_yr = BH_mdot * (1e10/(0.978*1e9)) #Msun/yr
         # arepo's own eps*Mdot*c^2 conversion factor is calibrated for the raw
-        # code-unit BH_mdot, not the Msun/yr version above.
+        # code-unit BH_mdot, not the Msun/yr version above. it is ~1e47, so the
+        # float32 the snapshot stores BH_Mdot in would overflow to inf here.
         BH_Lbol = BH_mdot * mdot_to_Lbol.get_conversion_factor_arepo(eps) #erg/s
-
-        nBHs = len(BH_coords)
-        if not (len(BH_mass) == len(BH_mdot) == nBHs):
-            raise RuntimeError(
-                f"snap {snap} subhalo {i}: BH field lengths disagree "
-                f"(coords {nBHs}, mass {len(BH_mass)}, mdot {len(BH_mdot)})")
 
         #distance of BHs from subhalo PoS
         d = BH_coords - subhalo_pos[i]
@@ -119,7 +123,7 @@ def snapshot_rows(sim_file, snap, z, max_subhalos, eps=0.2, verbose_every=200):
         r_code = np.linalg.norm(d, axis=1)               # 3D distance per BH
         r_kpc = r_code * to_kpc                           # code units -> physical kpc
 
-        subhalo_stellar_halfmass_rad = float(subhalo_cat["SubhaloHalfmassRadType"][i, 4]) * to_kpc
+        subhalo_stellar_halfmass_rad = float(stellar_halfrad_kpc[i])
 
         BH_closest_to_center = np.zeros(nBHs, dtype=bool)
         BH_closest_to_center[np.argmin(r_code)] = True
@@ -159,7 +163,8 @@ def snapshot_rows(sim_file, snap, z, max_subhalos, eps=0.2, verbose_every=200):
             BH_coords=BH_coords,
         ))
 
-    return bh_data, subhalo_data, n_sub_total, dict(HubbleParam=h, BoxSize=boxsize)
+    return (bh_data, subhalo_data, n_sub_total, n_starless_bh_hosts,
+            dict(HubbleParam=h, BoxSize=boxsize))
 
 
 def write_catalogue(f, bh_data, subhalo_data, snapshot_summary):
@@ -232,6 +237,8 @@ def write_catalogue(f, bh_data, subhalo_data, snapshot_summary):
     snapshot_group.create_dataset("n_subhalos", data=np.array([s["n_subhalos"] for s in snapshot_summary], dtype=np.int32))
     snapshot_group.create_dataset("n_subhalos_with_bh",
                                    data=np.array([s["n_subhalos_with_bh"] for s in snapshot_summary], dtype=np.int32))
+    snapshot_group.create_dataset("n_starless_subhalos_with_bh",
+                                   data=np.array([s["n_starless_subhalos_with_bh"] for s in snapshot_summary], dtype=np.int32))
     snapshot_group.create_dataset("n_bh", data=np.array([s["n_bh"] for s in snapshot_summary], dtype=np.int64))
     snapshot_group.create_dataset("bh_start", data=np.array([s["bh_start"] for s in snapshot_summary], dtype=np.int64))
     snapshot_group.create_dataset("subhalo_start",
@@ -253,7 +260,7 @@ if __name__ == "__main__":
                    help="explicit snapshot numbers")
     p.add_argument("--numSubhalos", type=int, default=-1, help="max number of subhalos to process per snap")
     args = p.parse_args()
-    print("Args parsed!") # FOR DEBUGGING
+    # print("Args parsed!") # FOR DEBUGGING
     sim_file = os.path.join(args.simPath, args.simName)
     outfile_name = os.path.join(args.outPath, f"wandering_bh_{args.simName.strip('/').replace('/', '_')}.hdf5")
 
@@ -279,13 +286,14 @@ if __name__ == "__main__":
         for snap in snaps_todo:
             z = z_of[snap]
 
-            bhs_in_each_subhalo, subhalo_information, n_sub_total, header = snapshot_rows(
+            bhs_in_each_subhalo, subhalo_information, n_sub_total, n_starless, header = snapshot_rows(
                 sim_file, snap, z, max_subhalos=None if args.numSubhalos < 0 else args.numSubhalos)
 
             n_bh_this_snap = sum(b["n"] for b in bhs_in_each_subhalo)
             snapshot_summary.append(dict(
                 snap=snap, redshift=z, n_subhalos=n_sub_total,
                 n_subhalos_with_bh=len(subhalo_information), 
+                n_starless_subhalos_with_bh=n_starless,
                 n_bh=n_bh_this_snap,
                 bh_start=bh_row_offset, 
                 subhalo_start=subhalo_row_offset,
@@ -302,7 +310,8 @@ if __name__ == "__main__":
                 f.attrs["BoxSize_ckpc_over_h"] = header["BoxSize"]
 
             print(f"snap {snap} (z={z:.3f}): {len(subhalo_information)}/{n_sub_total} subhalos "
-                  f" and has {n_bh_this_snap} BHs", flush=True)
+                  f" and has {n_bh_this_snap} BHs "
+                  f"({n_starless} BH-hosting subhalos skipped for having no stars)", flush=True)
 
         total_nBHs = write_catalogue(f, all_bh_data, all_subhalo_data, snapshot_summary)
         print(f"wrote {total_nBHs} BHs across {len(snapshot_summary)} snapshots")
@@ -332,7 +341,7 @@ if __name__ == "__main__":
 # │     is_wandering          bool
 # │     pos_ckpc_over_h       float32   shape (N_bh, 3)
 # │
-# ├── /subhalo/                         (one row per BH-hosting subhalo, N_sub rows)
+# ├── /subhalo/                  (one row per star-forming BH-hosting subhalo, N_sub rows)
 # │     snap                      int16
 # │     redshift                   float32
 # │     index                      int32   # index into the original subhalo catalogue
@@ -349,7 +358,8 @@ if __name__ == "__main__":
 #       snap                 int16
 #       redshift              float32
 #       n_subhalos            int32   # total subhalos in that snapshot
-#       n_subhalos_with_bh    int32
+#       n_subhalos_with_bh    int32   # BH hosts kept, i.e. those with stars
+#       n_starless_subhalos_with_bh int32  # BH hosts dropped for having no stellar body
 #       n_bh                  int64
 #       bh_start              int64   # offset into /bh for this snapshot's rows
 #       subhalo_start         int64   # offset into /subhalo for this snapshot's rows

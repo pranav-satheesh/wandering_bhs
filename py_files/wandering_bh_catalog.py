@@ -260,7 +260,7 @@ if __name__ == "__main__":
                    help="explicit snapshot numbers")
     p.add_argument("--numSubhalos", type=int, default=-1, help="max number of subhalos to process per snap")
     args = p.parse_args()
-    print("Args parsed!") # FOR DEBUGGING
+    # print("Args parsed!") # FOR DEBUGGING
     sim_file = os.path.join(args.simPath, args.simName)
     outfile_name = os.path.join(args.outPath, f"wandering_bh_{args.simName.strip('/').replace('/', '_')}.hdf5")
 
