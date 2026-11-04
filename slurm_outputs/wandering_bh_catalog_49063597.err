@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/pranavsatheesh/wandering_bhs/py_files/wandering_bh_catalog.py", line 289, in <module>
+    bhs_in_each_subhalo, subhalo_information, n_sub_total, n_starless, header = snapshot_rows(
+  File "/home/pranavsatheesh/wandering_bhs/py_files/wandering_bh_catalog.py", line 46, in snapshot_rows
+    subhalo_cat = brahma.groupcat.loadSubhalos_postprocessed(sim_file, snap, fields=SUBHALO_FIELDS)
+  File "/home/pranavsatheesh/cosmo_sim_tools/src/cosmo_sim_tools/brahma/groupcat.py", line 422, in loadSubhalos_postprocessed
+    return loadObjects_postprocessed(basePath, snapNum, "Subhalo", "subgroups", fields)
+  File "/home/pranavsatheesh/cosmo_sim_tools/src/cosmo_sim_tools/brahma/groupcat.py", line 84, in loadObjects_postprocessed
+    with h5py.File(gcPath_postprocessed(basePath, snapNum), 'r') as f:
+  File "/blue/lblecha/pranavsatheesh/.conda/envs/cosmosims/lib/python3.10/site-packages/h5py/_hl/files.py", line 561, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/blue/lblecha/pranavsatheesh/.conda/envs/cosmosims/lib/python3.10/site-packages/h5py/_hl/files.py", line 235, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 102, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to synchronously open file (unable to open file: name = '/orange/lblecha/aklantbhowmick/GAS_BASED_SEED_MODEL_UNIFORM_RUNS/L12p5n512/AREPO/SM5_LW10_LOWSPIN_RICH_DFD_3_TNG//groups_000_postprocessed/fof_subhalo_tab_000_postprocessed.0.hdf5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)

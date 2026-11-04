@@ -108,7 +108,7 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
                       s_min=4, s_max=120, logM_ref=(5.0, 9.0),
                       lum_floor=1e38, vmin=None, vmax=None, scalebar=True,
                       ax=None, figsize=(6.5, 5), show_size_legend=True,
-                      save_name=None, dpi=200):
+                      colorbar=True, save_name=None, dpi=200):
     """
     2D map of the black holes in a subhalo, with the subhalo particles as a
     smoothed surface-density background.
@@ -138,6 +138,8 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
     lum_floor      : L_bol value assigned to non-accreting (Mdot=0) BHs
     vmin, vmax     : colour limits for log10(L_bol); None -> from data
     ax             : existing axis to draw on; None -> make a new figure
+    colorbar       : draw this panel's L_bol colorbar (False when a multi-panel
+                     figure shares one colorbar)
     """
     header = brahma.groupcat.loadHeader(sim_file, snap)
     h = header['HubbleParam']
@@ -257,8 +259,9 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
                     vmin=vmin, vmax=vmax, edgecolor='black', linewidth=0.7,
                     zorder=3)
 
-    cbar = fig.colorbar(sc, ax=ax)
-    cbar.set_label(r'$\log_{10}(L_{\mathrm{bol}}\;[\mathrm{erg\,s^{-1}}])$')
+    if colorbar:
+        cbar = fig.colorbar(sc, ax=ax)
+        cbar.set_label(r'$\log_{10}(L_{\mathrm{bol}}\;[\mathrm{erg\,s^{-1}}])$')
 
     # ---- size legend -----------------------------------------------------
     if show_size_legend:

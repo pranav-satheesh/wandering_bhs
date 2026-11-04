@@ -1,0 +1,5 @@
+target z = 0.0 -> snap 32, z = 0.0000; target log M* = 10.750
+                     SM5_DFD_3_TNG subhalo  7562: log M* = 10.747, log Mtot = 12.262, N_BH = 173, central, 0.0 kpc from the reference centre
+                SM5_LW10_DFD_3_TNG subhalo  6508: log M* = 10.829, log Mtot = 12.270, N_BH = 53, central, 10.0 kpc from the reference centre
+   SM5_LW10_LOWSPIN_RICH_DFD_3_TNG subhalo  6458: log M* = 10.766, log Mtot = 12.259, N_BH = 7, central, 21.0 kpc from the reference centre
+Saved /home/pranavsatheesh/wandering_bhs/figures/2d_plots/bh_2dplot_seedcomp_snap32_logMstar10.75_SM5_vs_SM5_LW10_vs_SM5_LW10_LOWSPIN_RICH_sub7562_6508_6458_xy_bg4_60_inferno_adaptive_49076294.pdf

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/pranavsatheesh/wandering_bhs/py_files/wandering_bh_catalog.py", line 275, in <module>
+    with h5py.File(outfile_name, "w") as f:
+  File "/blue/lblecha/pranavsatheesh/.conda/envs/cosmosims/lib/python3.10/site-packages/h5py/_hl/files.py", line 561, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/blue/lblecha/pranavsatheesh/.conda/envs/cosmosims/lib/python3.10/site-packages/h5py/_hl/files.py", line 241, in make_fid
+    fid = h5f.create(name, h5f.ACC_TRUNC, fapl=fapl, fcpl=fcpl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 122, in h5py.h5f.create
+BlockingIOError: [Errno 11] Unable to synchronously create file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')

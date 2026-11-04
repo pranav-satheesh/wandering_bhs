@@ -1,0 +1,38 @@
+=== SM5_LW10_LOWSPIN_RICH_DFD_3_TNG/ on c0701a-s12.ufhpc  started Mon Nov  2 12:22:55 EST 2026 ===
+Args parsed!
+  snap 20: subhalo 0/383
+  snap 20: subhalo 200/383
+snap 20 (z=4.996): 383/110730 subhalos  and has 520 BHs (70 BH-hosting subhalos skipped for having no stars)
+  snap 21: subhalo 0/375
+  snap 21: subhalo 200/375
+snap 21 (z=4.008): 375/119588 subhalos  and has 533 BHs (40 BH-hosting subhalos skipped for having no stars)
+  snap 22: subhalo 0/331
+  snap 22: subhalo 200/331
+snap 22 (z=3.008): 331/123737 subhalos  and has 506 BHs (30 BH-hosting subhalos skipped for having no stars)
+  snap 23: subhalo 0/278
+  snap 23: subhalo 200/278
+snap 23 (z=2.002): 278/120937 subhalos  and has 472 BHs (16 BH-hosting subhalos skipped for having no stars)
+  snap 24: subhalo 0/248
+  snap 24: subhalo 200/248
+snap 24 (z=1.496): 248/116756 subhalos  and has 457 BHs (15 BH-hosting subhalos skipped for having no stars)
+  snap 25: subhalo 0/217
+  snap 25: subhalo 200/217
+snap 25 (z=0.997): 217/110218 subhalos  and has 441 BHs (9 BH-hosting subhalos skipped for having no stars)
+  snap 26: subhalo 0/204
+  snap 26: subhalo 200/204
+snap 26 (z=0.700): 204/105440 subhalos  and has 428 BHs (7 BH-hosting subhalos skipped for having no stars)
+  snap 27: subhalo 0/194
+snap 27 (z=0.503): 194/102037 subhalos  and has 415 BHs (7 BH-hosting subhalos skipped for having no stars)
+  snap 28: subhalo 0/183
+snap 28 (z=0.400): 183/99968 subhalos  and has 411 BHs (8 BH-hosting subhalos skipped for having no stars)
+  snap 29: subhalo 0/179
+snap 29 (z=0.298): 179/98020 subhalos  and has 407 BHs (8 BH-hosting subhalos skipped for having no stars)
+  snap 30: subhalo 0/171
+snap 30 (z=0.197): 171/96100 subhalos  and has 401 BHs (9 BH-hosting subhalos skipped for having no stars)
+  snap 31: subhalo 0/166
+snap 31 (z=0.099): 166/94498 subhalos  and has 391 BHs (11 BH-hosting subhalos skipped for having no stars)
+  snap 32: subhalo 0/163
+snap 32 (z=0.000): 163/92847 subhalos  and has 383 BHs (10 BH-hosting subhalos skipped for having no stars)
+wrote 5765 BHs across 13 snapshots
+wrote /orange/lblecha/pranavsatheesh/wandering_bhs/Data/wandering_bh_SM5_LW10_LOWSPIN_RICH_DFD_3_TNG.hdf5
+=== finished Mon Nov  2 12:24:34 EST 2026 ===
