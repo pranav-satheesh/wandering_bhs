@@ -1,0 +1,75 @@
+=== SM5_LW10_LOWSPIN_RICH_DFD_3_TNG/ on c0700a-s1.ufhpc  started Fri Nov  6 11:16:09 EST 2026 ===
+snap 0 (z=25.048): 0/2 subhalos  and has 0 BHs (0 BH-hosting subhalos skipped for having no stars)
+snap 1 (z=23.961): 0/8 subhalos  and has 0 BHs (0 BH-hosting subhalos skipped for having no stars)
+snap 2 (z=23.032): 0/22 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 3 (z=22.029): 0/49 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 4 (z=20.963): 0/118 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 5 (z=20.046): 0/226 subhalos  and has 0 BHs (1 BH-hosting subhalos skipped for having no stars)
+snap 6 (z=18.978): 0/497 subhalos  and has 0 BHs (4 BH-hosting subhalos skipped for having no stars)
+  snap 7: subhalo 0/1
+snap 7 (z=17.963): 1/1024 subhalos  and has 1 BHs (7 BH-hosting subhalos skipped for having no stars)
+  snap 8: subhalo 0/1
+snap 8 (z=17.000): 1/1933 subhalos  and has 1 BHs (22 BH-hosting subhalos skipped for having no stars)
+  snap 9: subhalo 0/5
+snap 9 (z=16.005): 5/3599 subhalos  and has 5 BHs (42 BH-hosting subhalos skipped for having no stars)
+  snap 10: subhalo 0/8
+snap 10 (z=14.989): 8/6433 subhalos  and has 9 BHs (86 BH-hosting subhalos skipped for having no stars)
+  snap 11: subhalo 0/28
+snap 11 (z=14.034): 28/10596 subhalos  and has 31 BHs (107 BH-hosting subhalos skipped for having no stars)
+  snap 12: subhalo 0/49
+snap 12 (z=13.003): 49/17530 subhalos  and has 56 BHs (167 BH-hosting subhalos skipped for having no stars)
+  snap 13: subhalo 0/93
+snap 13 (z=11.980): 93/27029 subhalos  and has 112 BHs (195 BH-hosting subhalos skipped for having no stars)
+  snap 14: subhalo 0/145
+snap 14 (z=10.976): 145/39679 subhalos  and has 174 BHs (213 BH-hosting subhalos skipped for having no stars)
+  snap 15: subhalo 0/215
+  snap 15: subhalo 200/215
+snap 15 (z=9.997): 215/49255 subhalos  and has 254 BHs (219 BH-hosting subhalos skipped for having no stars)
+  snap 16: subhalo 0/249
+  snap 16: subhalo 200/249
+snap 16 (z=9.002): 249/61350 subhalos  and has 308 BHs (229 BH-hosting subhalos skipped for having no stars)
+  snap 17: subhalo 0/298
+  snap 17: subhalo 200/298
+snap 17 (z=8.012): 298/73407 subhalos  and has 373 BHs (193 BH-hosting subhalos skipped for having no stars)
+  snap 18: subhalo 0/332
+  snap 18: subhalo 200/332
+snap 18 (z=7.005): 332/85687 subhalos  and has 438 BHs (166 BH-hosting subhalos skipped for having no stars)
+  snap 19: subhalo 0/354
+  snap 19: subhalo 200/354
+snap 19 (z=6.011): 354/98342 subhalos  and has 476 BHs (129 BH-hosting subhalos skipped for having no stars)
+  snap 20: subhalo 0/383
+  snap 20: subhalo 200/383
+snap 20 (z=4.996): 383/110730 subhalos  and has 520 BHs (70 BH-hosting subhalos skipped for having no stars)
+  snap 21: subhalo 0/375
+  snap 21: subhalo 200/375
+snap 21 (z=4.008): 375/119588 subhalos  and has 533 BHs (40 BH-hosting subhalos skipped for having no stars)
+  snap 22: subhalo 0/331
+  snap 22: subhalo 200/331
+snap 22 (z=3.008): 331/123737 subhalos  and has 506 BHs (30 BH-hosting subhalos skipped for having no stars)
+  snap 23: subhalo 0/278
+  snap 23: subhalo 200/278
+snap 23 (z=2.002): 278/120937 subhalos  and has 472 BHs (16 BH-hosting subhalos skipped for having no stars)
+  snap 24: subhalo 0/248
+  snap 24: subhalo 200/248
+snap 24 (z=1.496): 248/116756 subhalos  and has 457 BHs (15 BH-hosting subhalos skipped for having no stars)
+  snap 25: subhalo 0/217
+  snap 25: subhalo 200/217
+snap 25 (z=0.997): 217/110218 subhalos  and has 441 BHs (9 BH-hosting subhalos skipped for having no stars)
+  snap 26: subhalo 0/204
+  snap 26: subhalo 200/204
+snap 26 (z=0.700): 204/105440 subhalos  and has 428 BHs (7 BH-hosting subhalos skipped for having no stars)
+  snap 27: subhalo 0/194
+snap 27 (z=0.503): 194/102037 subhalos  and has 415 BHs (7 BH-hosting subhalos skipped for having no stars)
+  snap 28: subhalo 0/183
+snap 28 (z=0.400): 183/99968 subhalos  and has 411 BHs (8 BH-hosting subhalos skipped for having no stars)
+  snap 29: subhalo 0/179
+snap 29 (z=0.298): 179/98020 subhalos  and has 407 BHs (8 BH-hosting subhalos skipped for having no stars)
+  snap 30: subhalo 0/171
+snap 30 (z=0.197): 171/96100 subhalos  and has 401 BHs (9 BH-hosting subhalos skipped for having no stars)
+  snap 31: subhalo 0/166
+snap 31 (z=0.099): 166/94498 subhalos  and has 391 BHs (11 BH-hosting subhalos skipped for having no stars)
+  snap 32: subhalo 0/163
+snap 32 (z=0.000): 163/92847 subhalos  and has 383 BHs (10 BH-hosting subhalos skipped for having no stars)
+wrote 8003 BHs across 33 snapshots
+wrote /orange/lblecha/pranavsatheesh/wandering_bhs/Data/wandering_bh_SM5_LW10_LOWSPIN_RICH_DFD_3_TNG.hdf5
+=== finished Fri Nov  6 11:19:16 EST 2026 ===

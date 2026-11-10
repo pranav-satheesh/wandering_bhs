@@ -25,7 +25,7 @@ halo_type=any              # any / central / satellite
 max_dlogm=0.15                 # fail if any galaxy is further than this (dex)
 
 bg_ptype=4                 # 0=gas, 1=DM, 4=stars (background image)
-view='xy'
+views="xy xz yz"          # one figure per projection plane
 radiative_efficiency=0.2
 box_length=60              # kpc, shared by all panels
 nbins=400
@@ -43,7 +43,7 @@ python ${codePath}/run_bh_2dplot_seed_comparison.py \
   --max_dlogm $max_dlogm \
   --outDir $outDir \
   --bg_ptype $bg_ptype \
-  --view $view \
+  --views $views \
   --radiative_efficiency $radiative_efficiency \
   --box_length $box_length \
   --nbins $nbins \

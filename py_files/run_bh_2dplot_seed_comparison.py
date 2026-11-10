@@ -18,7 +18,7 @@ Example:
         --simPath /orange/.../L12p5n512/AREPO/ \
         --runs SM5_DFD_3_TNG SM5_LW10_DFD_3_TNG SM5_LW10_LOWSPIN_RICH_DFD_3_TNG \
         --redshift 0 --log_stellar_mass 10.75 --outDir ./figures/2d_plots \
-        --bg_ptype 0 --box_length 40
+        --bg_ptype 0 --box_length 40 --views xy xz yz
 """
 import os
 import argparse
@@ -138,8 +138,9 @@ def main():
     p.add_argument('--outDir', required=True, help='output directory')
     p.add_argument('--bg_ptype', type=int, default=0,
                    help='background particle type (1=DM, 0=gas, 4=stars)')
-    p.add_argument('--view', default='xy',
-                   help='projection plane: xy/yx/xz/zx/yz/zy')
+    p.add_argument('--views', nargs='+', default=['xy'],
+                   choices=sorted(bh_2dplot._VIEW_AXES),
+                   help='projection planes, one figure each (e.g. xy xz yz)')
     p.add_argument('--radiative_efficiency', type=float, default=0.2,
                    help='eps in L_bol = eps * Mdot c^2')
     p.add_argument('--lum_floor', type=float, default=1e38,
@@ -204,36 +205,38 @@ def main():
 
     box_length = float(args.box_length)
     n_runs = len(args.runs)
-    fig, axes = plt.subplots(1, n_runs, figsize=(6 * n_runs, 5.4), dpi=args.dpi,
-                             squeeze=False)
-    axes = axes[0]
-    for panel, (ax, sim_file, run_name, index) in enumerate(
-            zip(axes, sim_files, args.runs, indices)):
-        bh_2dplot.bh_subhalo_2Dplot(
-            sim_file, snap, z, index,
-            view=args.view, bg_ptype=args.bg_ptype, box_length=box_length,
-            Nbins=args.nbins, radiative_efficiency=args.radiative_efficiency,
-            cmap=args.bh_cmap, bg_cmap=args.bg_cmap, bg_method=args.bg_method,
-            adaptive_k=args.adaptive_k, lum_floor=args.lum_floor,
-            vmin=vmin, vmax=vmax, ax=ax, show_size_legend=(panel == n_runs - 1),
-            colorbar=False)
-        label = SEED_MODEL_LABELS.get(run_name, run_name)
-        ax.set_title(f"{label}\n{ax.get_title()}")
-
-    cbar = fig.colorbar(ScalarMappable(norm=Normalize(vmin, vmax), cmap=args.bh_cmap),
-                        ax=axes, fraction=0.025, pad=0.02)
-    cbar.set_label(r'$\log_{10}(L_{\mathrm{bol}}\;[\mathrm{erg\,s^{-1}}])$')
-
     jobid = os.environ.get('SLURM_JOB_ID', '')
     suffix = f"_{jobid}" if jobid else ""
-    save_name = os.path.join(
-        args.outDir,
-        f"bh_2dplot_seedcomp_snap{snap}_logMstar{args.log_stellar_mass:g}_"
-        f"{'_vs_'.join(SEED_MODEL_LABELS.get(run, run) for run in args.runs)}_"
-        f"sub{'_'.join(str(index) for index in indices)}_{args.view}_"
-        f"bg{args.bg_ptype}_{args.box_length}_{args.bg_cmap}_{args.bg_method}{suffix}.pdf")
-    fig.savefig(save_name, bbox_inches='tight', dpi=args.dpi)
-    print(f"Saved {save_name}")
+    for view in args.views:
+        fig, axes = plt.subplots(1, n_runs, figsize=(6 * n_runs, 5.4), dpi=args.dpi,
+                                 squeeze=False)
+        axes = axes[0]
+        for panel, (ax, sim_file, run_name, index) in enumerate(
+                zip(axes, sim_files, args.runs, indices)):
+            bh_2dplot.bh_subhalo_2Dplot(
+                sim_file, snap, z, index,
+                view=view, bg_ptype=args.bg_ptype, box_length=box_length,
+                Nbins=args.nbins, radiative_efficiency=args.radiative_efficiency,
+                cmap=args.bh_cmap, bg_cmap=args.bg_cmap, bg_method=args.bg_method,
+                adaptive_k=args.adaptive_k, lum_floor=args.lum_floor,
+                vmin=vmin, vmax=vmax, ax=ax, show_size_legend=(panel == n_runs - 1),
+                colorbar=False)
+            label = SEED_MODEL_LABELS.get(run_name, run_name)
+            ax.set_title(f"{label}\n{ax.get_title()}")
+
+        cbar = fig.colorbar(ScalarMappable(norm=Normalize(vmin, vmax), cmap=args.bh_cmap),
+                            ax=axes, fraction=0.025, pad=0.02)
+        cbar.set_label(r'$\log_{10}(L_{\mathrm{bol}}\;[\mathrm{erg\,s^{-1}}])$')
+
+        save_name = os.path.join(
+            args.outDir,
+            f"bh_2dplot_seedcomp_snap{snap}_logMstar{args.log_stellar_mass:g}_"
+            f"{'_vs_'.join(SEED_MODEL_LABELS.get(run, run) for run in args.runs)}_"
+            f"sub{'_'.join(str(index) for index in indices)}_{view}_"
+            f"bg{args.bg_ptype}_{args.box_length}_{args.bg_cmap}_{args.bg_method}{suffix}.pdf")
+        fig.savefig(save_name, bbox_inches='tight', dpi=args.dpi)
+        print(f"Saved {save_name}")
+        plt.close(fig)
 
 
 if __name__ == '__main__':

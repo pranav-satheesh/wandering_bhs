@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.font_manager as fm
+from matplotlib.patches import Circle
 from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 from scipy.ndimage import gaussian_filter
 
@@ -107,6 +108,7 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
                       bg_method='adaptive', adaptive_k=16, facecolor='black',
                       s_min=4, s_max=120, logM_ref=(5.0, 9.0),
                       lum_floor=1e38, vmin=None, vmax=None, scalebar=True,
+                      show_half_mass_radius=True,
                       ax=None, figsize=(6.5, 5), show_size_legend=True,
                       colorbar=True, save_name=None, dpi=200):
     """
@@ -134,6 +136,7 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
     adaptive_k     : neighbours for the adaptive smoothing length (bigger=smoother)
     bg_smooth      : gaussian smoothing of the background image, in pixels (hist)
     scalebar       : draw a physical scale bar (twoDplot style) and hide ticks
+    show_half_mass_radius : faint dotted circle at the stellar half-mass radius
     logM_ref       : (min, max) log10(M_BH/Msun) mapped onto (s_min, s_max)
     lum_floor      : L_bol value assigned to non-accreting (Mdot=0) BHs
     vmin, vmax     : colour limits for log10(L_bol); None -> from data
@@ -148,10 +151,13 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
 
     # POSTPROCESSED catalogue, to match the postprocessed particle loader.
     subhalos = brahma.groupcat.loadSubhalos_postprocessed(
-        sim_file, snap, fields=['SubhaloLenType', 'SubhaloPos', 'SubhaloMassType'])
+        sim_file, snap, fields=['SubhaloLenType', 'SubhaloPos', 'SubhaloMassType',
+                                'SubhaloHalfmassRadType'])
     center = np.asarray(subhalos['SubhaloPos'][subhalo_index], dtype=float)
     n_bh = int(subhalos['SubhaloLenType'][subhalo_index, 5])
     Mstar = float(subhalos['SubhaloMassType'][subhalo_index, 4]) * 1e10 / h  # Msun
+    stellar_half_mass_radius = float(
+        subhalos['SubhaloHalfmassRadType'][subhalo_index, 4]) * a / h      # physical kpc
 
     if n_bh == 0:
         print(f"subhalo {subhalo_index} (snap {snap}) has no black holes.")
@@ -277,6 +283,11 @@ def bh_subhalo_2Dplot(sim_file, snap, desired_redshift, subhalo_index,
         ax.legend(handles=handles, title=r'$M_{\rm BH}\,[M_\odot]$',
                   loc='upper right', labelspacing=1.1, frameon=True,
                   fontsize=8, title_fontsize=8)
+
+    if show_half_mass_radius and stellar_half_mass_radius > 0:
+        ax.add_patch(Circle((0.0, 0.0), stellar_half_mass_radius, fill=False,
+                            edgecolor='white', linestyle=':', linewidth=1.0,
+                            alpha=0.6, zorder=2))
 
     ax.set_xlim(-half, half)
     ax.set_ylim(-half, half)
